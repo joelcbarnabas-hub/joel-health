@@ -91,7 +91,7 @@
   .recon-row strong { color: var(--black); }
 
   .stack-note { border: var(--border); border-left: 4px solid var(--black); padding: 1.25rem 1.5rem; }
-  .stack-note-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 0.6rem; }
+  .stack-note-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.6rem; }
   .stack-note p { font-size: 13px; line-height: 1.85; color: var(--gray-dark); }
   .stack-note strong { color: var(--black); font-weight: 700; }
 
@@ -128,18 +128,21 @@
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  .recovery-section { margin-top: 3.5rem; }
-  .recovery-toggle { display: flex; align-items: center; gap: 1rem; cursor: pointer; user-select: none; }
-  .recovery-toggle .section-label { margin: 0; flex: 1; cursor: pointer; }
-  .recovery-chevron { font-size: 11px; letter-spacing: 0.15em; color: var(--gray-mid); transition: color 0.2s; white-space: nowrap; }
-  .recovery-toggle:hover .recovery-chevron { color: var(--red); }
-  .recovery-teaser { font-size: 11px; color: var(--gray-mid); letter-spacing: 0.08em; font-style: italic; margin-top: 0.4rem; margin-bottom: 0; padding-left: 0; }
-  .recovery-body { display: none; margin-top: 1.25rem; }
+  .recovery-section { margin-top: 1.5rem; }
+  .recovery-shell { border: var(--border); position: relative; overflow: hidden; cursor: pointer; transition: background 0.2s; }
+  .recovery-shell:hover { background: #faf8f4; }
+  .recovery-shell-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--red); }
+  .recovery-shell-header { padding: 1.25rem 1.5rem 1.25rem 2rem; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .recovery-shell-title { font-family: 'Courier Prime', monospace; font-size: 13px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); }
+  .recovery-shell-teaser { font-size: 11px; color: var(--gray-mid); font-style: italic; letter-spacing: 0.04em; padding: 0 1.5rem 1.25rem 2rem; margin-top: -0.5rem; border-bottom: var(--border-thin); }
+  .recovery-shell-teaser.hidden { display: none; }
+  .recovery-chevron { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-mid); white-space: nowrap; transition: color 0.2s; }
+  .recovery-shell:hover .recovery-chevron { color: var(--red); }
+  .recovery-body { display: none; padding: 1.5rem 1.5rem 1.75rem 2rem; }
   .recovery-body.open { display: block; }
-  .recovery-card { border: var(--border); border-left: 4px solid var(--red); padding: 1.75rem 1.75rem 1.75rem 1.75rem; }
-  .recovery-card p { font-size: 13.5px; line-height: 1.95; color: var(--gray-dark); margin-bottom: 1rem; }
-  .recovery-card p:last-child { margin-bottom: 0; }
-  .recovery-card strong { color: var(--black); font-weight: 700; }
+  .recovery-body p { font-size: 13.5px; line-height: 1.95; color: var(--gray-dark); margin-bottom: 1rem; }
+  .recovery-body p:last-child { margin-bottom: 0; }
+  .recovery-body strong { color: var(--black); font-weight: 700; }
 
   @media (max-width: 640px) {
     .site-header, .hero, .main, .footer { padding-left: 1.25rem; padding-right: 1.25rem; }
@@ -364,13 +367,14 @@
 
   <!-- RECOVERY SECTION -->
   <div class="recovery-section reveal d7">
-    <div class="recovery-toggle" onclick="toggleRecovery()">
-      <span class="section-label" style="margin:0;">The Window After</span>
-      <span class="recovery-chevron" id="recovery-chevron">open ▸</span>
-    </div>
-    <p class="recovery-teaser">The minutes after matter too.</p>
-    <div class="recovery-body" id="recovery-body">
-      <div class="recovery-card">
+    <div class="recovery-shell" onclick="toggleRecovery()">
+      <div class="recovery-shell-accent"></div>
+      <div class="recovery-shell-header">
+        <span class="recovery-shell-title">The Window After</span>
+        <span class="recovery-chevron" id="recovery-chevron">Open ▸</span>
+      </div>
+      <p class="recovery-shell-teaser" id="recovery-teaser">The minutes after matter too.</p>
+      <div class="recovery-body" id="recovery-body">
         <p>After, don't stop.</p>
         <p>The minutes that follow aren't the end — they're a transition. My body moves through a brief reset, but the desire doesn't disappear. PT-141 is still active. The signal is still there. What closes that window faster than anything isn't a compound — it's you.</p>
         <p><strong>Your touch is the protocol.</strong></p>
@@ -440,9 +444,11 @@
 function toggleRecovery() {
   const body = document.getElementById('recovery-body');
   const chevron = document.getElementById('recovery-chevron');
+  const teaser = document.getElementById('recovery-teaser');
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open');
-  chevron.textContent = isOpen ? 'open ▸' : 'close ▾';
+  teaser.classList.toggle('hidden', !isOpen);
+  chevron.textContent = isOpen ? 'Open ▸' : 'Close ▾';
 }
 
 function switchTab(tab, btn) {
