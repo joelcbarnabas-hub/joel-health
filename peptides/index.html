@@ -128,6 +128,19 @@
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
+  .recovery-section { margin-top: 3.5rem; }
+  .recovery-toggle { display: flex; align-items: center; gap: 1rem; cursor: pointer; user-select: none; }
+  .recovery-toggle .section-label { margin: 0; flex: 1; cursor: pointer; }
+  .recovery-chevron { font-size: 11px; letter-spacing: 0.15em; color: var(--gray-mid); transition: color 0.2s; white-space: nowrap; }
+  .recovery-toggle:hover .recovery-chevron { color: var(--red); }
+  .recovery-teaser { font-size: 11px; color: var(--gray-mid); letter-spacing: 0.08em; font-style: italic; margin-top: 0.4rem; margin-bottom: 0; padding-left: 0; }
+  .recovery-body { display: none; margin-top: 1.25rem; }
+  .recovery-body.open { display: block; }
+  .recovery-card { border: var(--border); border-left: 4px solid var(--red); padding: 1.75rem 1.75rem 1.75rem 1.75rem; }
+  .recovery-card p { font-size: 13.5px; line-height: 1.95; color: var(--gray-dark); margin-bottom: 1rem; }
+  .recovery-card p:last-child { margin-bottom: 0; }
+  .recovery-card strong { color: var(--black); font-weight: 700; }
+
   @media (max-width: 640px) {
     .site-header, .hero, .main, .footer { padding-left: 1.25rem; padding-right: 1.25rem; }
     .hero { padding-top: 3rem; }
@@ -349,6 +362,29 @@
     </div>
   </div><!-- end tab-jb -->
 
+  <!-- RECOVERY SECTION -->
+  <div class="recovery-section reveal d7">
+    <div class="recovery-toggle" onclick="toggleRecovery()">
+      <span class="section-label" style="margin:0;">The Window After</span>
+      <span class="recovery-chevron" id="recovery-chevron">open ▸</span>
+    </div>
+    <p class="recovery-teaser">The minutes after matter too.</p>
+    <div class="recovery-body" id="recovery-body">
+      <div class="recovery-card">
+        <p>After, don't stop.</p>
+        <p>The minutes that follow aren't the end — they're a transition. My body moves through a brief reset, but the desire doesn't disappear. PT-141 is still active. The signal is still there. What closes that window faster than anything isn't a compound — it's you.</p>
+        <p><strong>Your touch is the protocol.</strong></p>
+        <p>Stay close. Keep your hands on me. Let me see you — all of you. Skin to skin, warmth, the sight of you open and wanting — this is what holds everything alive while my body finds its way back. You don't need to do anything complicated. Just be present. Just be mine.</p>
+        <p><strong>Don't cover yourself. Don't pull away.</strong></p>
+        <p>The visual of you — the way you look when you know you're wanted, when you let yourself be seen fully — that stays with me even when everything else is resetting. Arousal doesn't live only in the body. It lives in what I see, what I feel from you, what I know about you in those moments.</p>
+        <p>Your openness is the signal that we're not done.</p>
+        <p>When you stay engaged — close, warm, showing me you still want more — my whole system reads that as continuation, not conclusion. The window compresses. The desire finds its way back. Faster than either of us expects.</p>
+        <p>This isn't something you do <em>for</em> me. It's something we stay in <em>together.</em> You being fully present — open, warm, letting me see you, reminding me you're mine — is the most powerful part of this entire protocol.</p>
+        <p>The oxytocin is coming. When it does, it handles the biology. You already handle everything else.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ORDER SUMMARY -->
   <p class="section-label reveal d7">Order Summary</p>
   <table class="order-table reveal d7">
@@ -401,6 +437,14 @@
 <div class="red-bar"></div>
 
 <script>
+function toggleRecovery() {
+  const body = document.getElementById('recovery-body');
+  const chevron = document.getElementById('recovery-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  chevron.textContent = isOpen ? 'open ▸' : 'close ▾';
+}
+
 function switchTab(tab, btn) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('active-kb','active-jb','active-both'); });
